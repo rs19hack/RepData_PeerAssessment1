@@ -33,8 +33,8 @@ From the aggregated daily data, we can easily calculate the mean and median numb
 mean(dtdaily[,2])
 median (dtdaily[,2])
 ```
-
-**Mean: 10766 steps per day, Median: 10765 steps**
+<font color="#FF0000">
+**Mean: 10766 steps per day, Median: 10765 steps** </font>
 
 ## What is the average daily activity pattern?
 
@@ -42,12 +42,12 @@ We can plot the activity by 5-minute interval during the day, aggregating the da
 
 ```{r interval_stats, echo=TRUE}
 dtint <-aggregate(steps ~ interval, data = dt, FUN="mean")
-head(dtint)
 sapply(dtint, class)
 plot(dtint$interval, dtint$steps, type="l", xlab="5-minute interval ID#", ylab="Average number of steps", main="Average daily number of steps per 5-minute interval")
+subset(dtint, dtint$steps == max(dtint$steps))
 ```
 
-On average across all the days in the dataset, the peak activity (number of step in a 5-minute interval) occurs around **08:35** in the morning.
+On average across all the days in the dataset, <font color="#FF0000">the peak activity (number of step in a 5-minute interval) occurs around **08:35** in the morning.</font>
 
 ## Imputing missing values
 
@@ -58,23 +58,22 @@ naRowNums <- is.na(dt$steps)
 sum(naRowNums)      # Gives total number of rows with NA in steps column of dataset
 dtImputed <- dt     # Create copy of dataset to fill NA's with imputed # of steps
 dtImputed$steps[naRowNums] <- as.integer(round(dtint$steps[match(dtImputed$interval[naRowNums], dtint$interval)]))
-head(dtImputed)     # Sanity check
-
 ```
-There are **2304 missing values** in the data set. We have replaced them with average number of step in the corresponding interval across the entire two-month period, rounded to the nearest integer.
+<font color="#FF0000">There are **2304 missing values** in the data set. </font>
+
+We have replaced them with average number of step in the corresponding interval across the entire two-month period, rounded to the nearest integer.
 
 Let us now repeat the mean and median calculations for the modified dataset:
 
 ```{r imputedDatasetStats, echo=TRUE}
-dtdaily <-aggregate(steps ~ date, data = dtImputed, FUN="sum")
-head(dtdaily)
-hist(dtdaily[,2], breaks=10, col="green", xlab="Number of steps per day", main=paste("Histogram of daily total steps [with imputed values for missing data]"))
-as.integer(round(mean(dtdaily[,2])))
-median (dtdaily[,2])
+dtIdaily <-aggregate(steps ~ date, data = dtImputed, FUN="sum")
+hist(dtIdaily[,2], breaks=10, col="green", xlab="Number of steps per day", main=paste("Histogram of daily total steps [with imputed values for missing data]"))
+as.integer(round(mean(dtIdaily[,2])))
+median (dtIdaily[,2])
 ```
 The new values for mean and median for the daily total number of steps are:
 
-**Mean = 10766, Median=10762**
+<font color="#FF0000">**Mean = 10766, Median=10762**</font>
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -92,10 +91,10 @@ xyplot(steps ~ interval | day, data=dtIdaily, type="l", xlab= "Interval ID#", yl
 
 ```
 
-Looking at the plot of weekday vs. weekend physical activity, we can draw the following conclusions:
+Looking at the plot of weekday vs. weekend physical activity, <font color="#FF0000">we can draw the following conclusions:</font>
 
 * The subject likely sleeps in on the weekend, waking up around 8 AM, compared with a little after 5:00 AM on weekdays.
 * The subject likely has a sedentary job with small amount of walking movement through the work day.
-* On the weekends, the subject is more active throughout the day than on weekdays.
+* On weekends, the subject is more active throughout the day than on weekdays.
 
 

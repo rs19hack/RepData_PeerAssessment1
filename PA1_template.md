@@ -89,8 +89,8 @@ median(dtdaily[, 2])
 ## [1] 10765
 ```
 
-
-**Mean: 10766 steps per day, Median: 10765 steps**
+<font color="#FF0000">
+**Mean: 10766 steps per day, Median: 10765 steps** </font>
 
 ## What is the average daily activity pattern?
 
@@ -99,20 +99,6 @@ We can plot the activity by 5-minute interval during the day, aggregating the da
 
 ```r
 dtint <- aggregate(steps ~ interval, data = dt, FUN = "mean")
-head(dtint)
-```
-
-```
-##   interval   steps
-## 1        0 1.71698
-## 2        5 0.33962
-## 3       10 0.13208
-## 4       15 0.15094
-## 5       20 0.07547
-## 6       25 2.09434
-```
-
-```r
 sapply(dtint, class)
 ```
 
@@ -128,8 +114,17 @@ plot(dtint$interval, dtint$steps, type = "l", xlab = "5-minute interval ID#",
 
 ![plot of chunk interval_stats](figure/interval_stats.png) 
 
+```r
+subset(dtint, dtint$steps == max(dtint$steps))
+```
 
-On average across all the days in the dataset, the peak activity (number of step in a 5-minute interval) occurs around **08:35** in the morning.
+```
+##     interval steps
+## 104      835 206.2
+```
+
+
+On average across all the days in the dataset, <font color="#FF0000">the peak activity (number of step in a 5-minute interval) occurs around **08:35** in the morning.</font>
 
 ## Imputing missing values
 
@@ -149,48 +144,25 @@ sum(naRowNums)  # Gives total number of rows with NA in steps column of dataset
 dtImputed <- dt  # Create copy of dataset to fill NA's with imputed # of steps
 dtImputed$steps[naRowNums] <- as.integer(round(dtint$steps[match(dtImputed$interval[naRowNums], 
     dtint$interval)]))
-head(dtImputed)  # Sanity check
 ```
 
-```
-##   steps       date interval
-## 1     2 2012-10-01        0
-## 2     0 2012-10-01        5
-## 3     0 2012-10-01       10
-## 4     0 2012-10-01       15
-## 5     0 2012-10-01       20
-## 6     2 2012-10-01       25
-```
+<font color="#FF0000">There are **2304 missing values** in the data set. </font>
 
-There are **2304 missing values** in the data set. We have replaced them with average number of step in the corresponding interval across the entire two-month period, rounded to the nearest integer.
+We have replaced them with average number of step in the corresponding interval across the entire two-month period, rounded to the nearest integer.
 
 Let us now repeat the mean and median calculations for the modified dataset:
 
 
 ```r
-dtdaily <- aggregate(steps ~ date, data = dtImputed, FUN = "sum")
-head(dtdaily)
-```
-
-```
-##         date steps
-## 1 2012-10-01 10762
-## 2 2012-10-02   126
-## 3 2012-10-03 11352
-## 4 2012-10-04 12116
-## 5 2012-10-05 13294
-## 6 2012-10-06 15420
-```
-
-```r
-hist(dtdaily[, 2], breaks = 10, col = "green", xlab = "Number of steps per day", 
+dtIdaily <- aggregate(steps ~ date, data = dtImputed, FUN = "sum")
+hist(dtIdaily[, 2], breaks = 10, col = "green", xlab = "Number of steps per day", 
     main = paste("Histogram of daily total steps [with imputed values for missing data]"))
 ```
 
 ![plot of chunk imputedDatasetStats](figure/imputedDatasetStats.png) 
 
 ```r
-as.integer(round(mean(dtdaily[, 2])))
+as.integer(round(mean(dtIdaily[, 2])))
 ```
 
 ```
@@ -198,7 +170,7 @@ as.integer(round(mean(dtdaily[, 2])))
 ```
 
 ```r
-median(dtdaily[, 2])
+median(dtIdaily[, 2])
 ```
 
 ```
@@ -207,7 +179,7 @@ median(dtdaily[, 2])
 
 The new values for mean and median for the daily total number of steps are:
 
-**Mean = 10766, Median=10762**
+<font color="#FF0000">**Mean = 10766, Median=10762**</font>
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -229,8 +201,10 @@ xyplot(steps ~ interval | day, data = dtIdaily, type = "l", xlab = "Interval ID#
 ![plot of chunk weekendEffect](figure/weekendEffect.png) 
 
 
-Looking at the plot of weekday vs. weekend physical activity, we can draw the following conclusions:
+Looking at the plot of weekday vs. weekend physical activity, <font color="#FF0000">we can draw the following conclusions:</font>
 
 * The subject likely sleeps in on the weekend, waking up around 8 AM, compared with a little after 5:00 AM on weekdays.
 * The subject likely has a sedentary job with small amount of walking movement through the work day.
-* On the weekends, the subject is more active throughout the day than on weekdays.
+* On weekends, the subject is more active throughout the day than on weekdays.
+
+
