@@ -97,4 +97,4 @@ Looking at the plot of weekday vs. weekend physical activity, <font color="#FF00
 * The subject likely has a sedentary job with small amount of walking movement through the work day.
 * On weekends, the subject is more active throughout the day than on weekdays.
 
-
+<END>
